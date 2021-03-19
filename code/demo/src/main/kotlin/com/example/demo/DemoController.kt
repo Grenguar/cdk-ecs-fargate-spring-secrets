@@ -15,14 +15,14 @@ import com.github.kittinunf.result.Result;
 class DemoController {
 
   @GetMapping("/")
-  fun root(@RequestHeader headers: Map<String, String>, model: Model): String {
+  fun root(): String {
     return "Hello root"
   }
 
   @GetMapping("/secrets")
-  fun secrets(@RequestHeader headers: Map<String, String>, model: Model): String {
-    var secret1 = System.getenv("SECRET1") ?: "default_value"
-    var secret2 = System.getenv("SECRET2") ?: "default_value"
+  fun secrets(): String {
+    var user = System.getenv("USER") ?: "default_value"
+    var password = System.getenv("{PASSWORD}") ?: "default_value"
     return """
     Hello Dear Secrets:
     - ${user}
@@ -30,9 +30,9 @@ class DemoController {
     """
   }
 
-  @GetMapping("/check")
-  fun internet(@RequestHeader headers: Map<String, String>, model: Model): String {
-    val (request, response, result) = "https://cat-fact.herokuapp.com/facts"
+  @GetMapping("/cat")
+  fun internet(): String {
+    val (request, response, result) = "https://cat-fact.herokuapp.com/facts/random?animal_type=cat&amount=1"
     .httpGet()
     .responseString()
 
