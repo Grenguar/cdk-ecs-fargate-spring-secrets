@@ -1,0 +1,1 @@
+# cdk-ecs-fargate-spring-secrets
