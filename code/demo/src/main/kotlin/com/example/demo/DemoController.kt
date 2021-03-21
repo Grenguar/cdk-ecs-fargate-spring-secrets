@@ -22,7 +22,7 @@ class DemoController {
   @GetMapping("/secrets")
   fun secrets(): String {
     var user = System.getenv("USER") ?: "default_value"
-    var password = System.getenv("{PASSWORD}") ?: "default_value"
+    var password = System.getenv("PASSWORD") ?: "default_value"
     return """
     Hello Dear Secrets:
     - ${user}

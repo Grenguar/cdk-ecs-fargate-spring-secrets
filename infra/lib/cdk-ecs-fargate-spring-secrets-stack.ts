@@ -13,7 +13,7 @@ import { ServicePrincipal } from "@aws-cdk/aws-iam/lib/principals";
 import { ManagedPolicy } from "@aws-cdk/aws-iam/lib/managed-policy";
 import { StringParameter } from "@aws-cdk/aws-ssm/lib/parameter";
 import { RetentionDays } from "@aws-cdk/aws-logs/lib/log-group";
-import { ApplicationLoadBalancedFargateService } from "@aws-cdk/aws-ecs-patterns";
+import * as ecs_patterns from "@aws-cdk/aws-ecs-patterns";
 
 export class CdkEcsFargateSpringSecretsStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props: SpecificProps) {
@@ -82,18 +82,17 @@ export class CdkEcsFargateSpringSecretsStack extends cdk.Stack {
         }),
       })
       .addPortMappings({
-        containerPort: 8000,
+        containerPort: 80,
       });
 
-    const loadbalancerWithService = new ApplicationLoadBalancedFargateService(
+    new ecs_patterns.ApplicationLoadBalancedFargateService(
       this,
       `${stage}-demo-service-with-lb`,
       {
-        serviceName: `${stage}-demo-service`,
         cluster,
-        cpu: 256,
-        desiredCount: 2,
-        memoryLimitMiB: 256,
+        cpu: 512,
+        desiredCount: 1,
+        memoryLimitMiB: 512,
         publicLoadBalancer: true,
         taskDefinition: demoTaskDefinition,
         listenerPort: 80,
