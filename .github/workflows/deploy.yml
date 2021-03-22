@@ -5,20 +5,15 @@ on:
     branches:
       - main
 jobs:
-  build-jar:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - name: Compile jar file
-        run: cd code/demo && ./gradlew bootJar
-
-  build-test-infra:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
         with:
           node-version: "10.x"
+      - name: Compile jar file
+        run: cd code/demo && ./gradlew bootJar
       - name: Install dependencies
         run: cd infra && npm install
       - name: Building
@@ -27,15 +22,6 @@ jobs:
         run: cd infra && npm run test
       - name: Synthesize cloudformation
         run: cd infra && npm run cdk synth
-
-  deploy:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: "10.x"
       - name: deploy as DEV
         env:
           AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}

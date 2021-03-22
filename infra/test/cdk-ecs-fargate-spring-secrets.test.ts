@@ -2,6 +2,7 @@ import {
   expect as expectCDK,
   matchTemplate,
   MatchStyle,
+  SynthUtils,
 } from "@aws-cdk/assert";
 import * as cdk from "@aws-cdk/core";
 import * as CdkEcsFargateSpringSecrets from "../lib/cdk-ecs-fargate-spring-secrets-stack";
@@ -17,12 +18,5 @@ test("Empty Stack", () => {
     }
   );
   // THEN
-  expectCDK(stack).to(
-    matchTemplate(
-      {
-        Resources: {},
-      },
-      MatchStyle.EXACT
-    )
-  );
+  expect(SynthUtils.toCloudFormation(stack)).toMatchSnapshot();
 });
