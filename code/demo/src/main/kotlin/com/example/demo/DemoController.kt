@@ -29,22 +29,5 @@ class DemoController {
     - ${password}
     """
   }
-
-  @GetMapping("/cat")
-  fun internet(): String {
-    val (request, response, result) = "https://cat-fact.herokuapp.com/facts/random?animal_type=cat&amount=1"
-    .httpGet()
-    .responseString()
-
-    when (result) {
-        is Result.Failure -> {
-            val ex = result.getException()
-            return ex.toString()
-        }
-        is Result.Success -> {
-            val data = result.get()
-            return data
-        }
-    }
-  }
+  
 }
