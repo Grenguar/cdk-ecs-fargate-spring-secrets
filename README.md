@@ -1,5 +1,7 @@
 # Deploying Spring app to AWS ECS with Fargate and CDK
 
+[![Deploy](https://github.com/Grenguar/cdk-ecs-fargate-spring-secrets/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/Grenguar/cdk-ecs-fargate-spring-secrets/actions/workflows/deploy.yml)
+
 This is a CDK app which is deploying Kotlin Spring app to the AWS ECS as Fargate service with Load Balancer. The great part that this project includes GitHub Actions template and AWS SSM to store secrets.
 
 ## Useful commands
